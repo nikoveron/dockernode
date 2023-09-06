@@ -1,0 +1,19 @@
+﻿1. Creador MySQL:
+   - docker run -d -p 3306:3306 --name mi-contenedor-mysql -e MYSQL_ROOT_PASSWORD=root1 -v ${PWD}/db:/var/lib/mysql mysql:debian: Este comando crea un contenedor Docker a partir de la imagen `mysql:debian`. El contenedor se llama `mi-contenedor-mysql` y se ejecuta en segundo plano (-d) exponiendo el puerto 3306 para la comunicación de MySQL. Se establece la contraseña de root como "root1" utilizando la variable de entorno `-e MYSQL_ROOT_PASSWORD`. Además, se monta un volumen local `${PWD}/db` en la ubicación `/var/lib/mysql` dentro del contenedor para almacenar los datos de MySQL.
+
+
+2. Creador Web1:
+   - docker build -t web1-container . : Este comando crea una imagen Docker llamada `web1-container` a partir del contexto actual (el directorio actual), quecontiene un Dockerfile para una aplicación web.
+   - docker run -d --name web1-container -p 8081:80 web1-container : Este comando ejecuta un contenedor a partir de la imagen `web1-container`, llamándolo `web1-container`. La aplicación web dentro del contenedor se ejecutará en el puerto 80 del contenedor y se mapeará al puerto 8081 del host.
+   - docker cp web1/index.js web1-container:/var/www/html/index.html : Este comando copia un archivo `index.js` desde la ubicación local `web1/index.js` al contenedor `web1-container` en la ruta `/var/www/html/index.html`.
+
+
+3. Creador Web2:
+   - docker build -t web2-container . : Similar al comando anterior, este crea una imagen Docker llamada `web2-container` a partir de un contexto local.
+   - docker run -d --name web2-container -p 8082:80 web2-container : Este comando ejecuta un segundo contenedor basado en la imagen `web2-container` y lo nombra `web2-container`. La aplicación web se ejecuta en el puerto 80 del contenedor y se mapea al puerto 8082 del host.
+   - docker cp web2/index.js web2-container:/var/www/html/index.html : Copia el archivo `index.js` desde `web2/index.js` al contenedor `web2-container`.
+
+
+4. Creador HAProxy:
+   - docker run -d --name haproxy-container -p 8085:80 haproxy:latest : Este comando ejecuta un contenedor Docker a partir de la imagen `haproxy:latest`, llamándolo `haproxy-container`. HAProxy es un balanceador de carga que escucha en el puerto 80 dentro del contenedor y se mapea al puerto 8085 del host.
+- docker cp ${PWD}/balanceador/haproxy.cfg haproxy-container:/usr/local/etc/haproxy/haproxy.cfg : Copia el archivo de configuración `haproxy.cfg` desde una ubicación local `${PWD}/balanceador/haproxy.cfg` al contenedor `haproxy-container` en la ruta `/usr/local/etc/haproxy/haproxy.cfg`.
